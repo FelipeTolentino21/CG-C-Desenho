@@ -215,3 +215,100 @@ int main(int argc, char** argv)
 	return 0;
 }
 */
+/*		----------------- TRANSLATE / ROTATE / SCALE -----------------
+#include <GL/glut.h>
+
+void desenho()
+{
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	//glTranslatef(0.1, 0, 0);
+	//glRotatef(1, 0, 0, 1);
+	glScalef(1.001, 1.001, 1);
+
+	glColor3f(1.0f, 0.0f, 0.0f); // vermelho
+	//glPointSize(10.0f); // aumenta o tamanho dos pontos
+	glLineWidth(5);
+	glBegin(GL_QUADS);
+	glVertex2f(-3, -3);
+	glVertex2f(-3, 3);
+	glVertex2f(3, 3);
+	glVertex2f(3, -3);
+	glEnd();
+
+	glFlush();
+}
+void anima(int timer) {
+	glutPostRedisplay();
+	glutTimerFunc(10, anima, 0);
+}
+
+int main(int argc, char** argv)
+{
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);
+	glutInitWindowSize(600, 600);
+	glutInitWindowPosition(10, 20);
+	glutCreateWindow("Transformacoes");
+	glutDisplayFunc(desenho);
+	glutTimerFunc(10, anima, 0);
+	gluOrtho2D(-10, 10, -10, 10);
+	glClearColor(256.0 / 256.0, 256.0 / 256.0, 256.0 / 256.0, 0);
+	glutMainLoop();
+	return 0;
+}
+*/
+
+#include <GL/glut.h>
+#include <math.h>
+
+void circle(float radius) {
+	float angle;
+	int i;
+	glBegin(GL_POLYGON);
+	for (i = 0; i < 360; i++) {
+		angle = i * 3.14159 / 180;
+		glVertex2f(radius * cos(angle), radius * sin(angle));
+	}
+	glEnd();
+}
+
+void desenho()
+{
+	glClear(GL_COLOR_BUFFER_BIT);
+	//glTranslatef(0.1, 0, 0);
+	//glRotatef(1, 0, 0, 1);
+	glScalef(1.001, 1.001, 0);
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glLineWidth(5);
+	circle(5);
+	/*
+	glBegin(GL_QUADS);
+		glVertex2f(-3, -3);
+		glVertex2f(-3, 3);
+		glVertex2f(3, 3);
+		glVertex2f(3, -3);
+	glEnd();
+	*/
+	glFlush();
+}
+
+void anima(int timer) {
+	glutPostRedisplay();
+	glutTimerFunc(10, anima, 0);
+}
+
+int main(int argc, char** argv)
+{
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);
+	glutInitWindowSize(600, 600);
+	glutInitWindowPosition(10, 20);
+	glutCreateWindow("Transformacoes");
+	glutDisplayFunc(desenho);
+	glutTimerFunc(10, anima, 0);
+	gluOrtho2D(-10, 10, -10, 10);
+	glClearColor(256.0 / 256.0, 256.0 / 256.0, 256.0 / 256.0, 0);
+	glutMainLoop();
+	return 0;
+}
