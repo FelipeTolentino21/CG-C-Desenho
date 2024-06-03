@@ -258,7 +258,7 @@ int main(int argc, char** argv)
 	return 0;
 }
 */
-
+/*
 #include <GL/glut.h>
 #include <math.h>
 
@@ -282,14 +282,14 @@ void desenho()
 	glColor3f(1.0f, 0.0f, 0.0f);
 	glLineWidth(5);
 	circle(5);
-	/*
-	glBegin(GL_QUADS);
-		glVertex2f(-3, -3);
-		glVertex2f(-3, 3);
-		glVertex2f(3, 3);
-		glVertex2f(3, -3);
-	glEnd();
-	*/
+	
+//	glBegin(GL_QUADS);
+//		glVertex2f(-3, -3);
+//		glVertex2f(-3, 3);
+//		glVertex2f(3, 3);
+//		glVertex2f(3, -3);
+//	glEnd();
+	
 	glFlush();
 }
 
@@ -307,6 +307,71 @@ int main(int argc, char** argv)
 	glutCreateWindow("Transformacoes");
 	glutDisplayFunc(desenho);
 	glutTimerFunc(10, anima, 0);
+	gluOrtho2D(-10, 10, -10, 10);
+	glClearColor(256.0 / 256.0, 256.0 / 256.0, 256.0 / 256.0, 0);
+	glutMainLoop();
+	return 0;
+}
+*/
+#include <GL/glut.h>
+#include <math.h>
+
+float x_position;
+float y_position;
+
+void desenho()
+{
+	glClear(GL_COLOR_BUFFER_BIT);
+	glColor3f(1, 0, 0);
+	glTranslatef(x_position, y_position, 0);
+	glBegin(GL_QUADS);
+	glVertex2f(-3, -3);
+	glVertex2f(-3, 3);
+	glVertex2f(3, 3);
+	glVertex2f(3, -3);
+	glEnd();
+	glFlush();
+}
+
+void teclado(unsigned char key, int x, int y) {
+	// 97 = a na tabela ASCII
+	if (key == 97) {
+		x_position =  -0.1;
+		y_position = 0;
+		glutPostRedisplay();
+	}
+
+	// 100 = d na tabela ASCII
+	if (key == 100) {
+		x_position = 0.1;
+		y_position = 0;
+		glutPostRedisplay();
+	}
+	
+	// 119 = w na tabela ASCII
+	if (key == 32) {
+		y_position = 0.1;
+		x_position = 0;
+		glutPostRedisplay();
+	}
+
+	// 115 = s na tabela ASCII
+	if (key == 115) {
+		y_position = -0.1;
+		x_position = 0;
+		glutPostRedisplay();
+	}
+}
+
+int main(int argc, char** argv)
+{
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);
+	glutInitWindowSize(600, 600);
+	glutInitWindowPosition(10, 20);
+	glutCreateWindow("Input");
+	glutDisplayFunc(desenho);
+	glutKeyboardFunc(teclado);
 	gluOrtho2D(-10, 10, -10, 10);
 	glClearColor(256.0 / 256.0, 256.0 / 256.0, 256.0 / 256.0, 0);
 	glutMainLoop();
